@@ -13,8 +13,4 @@
         HIT = 'x',
         MISSED = 'o',
     } cell_t;
-    typedef cell_t **grid_t;
-
-    grid_t grid_create(unsigned int nb_rows, unsigned int nb_cols);
-    void print_grid(grid_t grid);
 #endif
