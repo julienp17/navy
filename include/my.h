@@ -16,6 +16,7 @@
     void my_free_2d_array(char **arr);
 
     bool my_is_alpha(char const c);
+    bool my_is_alpha_upper(char const c);
     bool my_is_num(char const c);
     bool my_str_isalpha(char const *str);
     bool my_str_isnum(char const *str);

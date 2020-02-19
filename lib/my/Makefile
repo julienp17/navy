@@ -15,6 +15,7 @@ SRC		=	my_clean_str.c \
 			my_int_to_strnum.c \
 			my_intlen.c \
 			my_is_alpha.c \
+			my_is_alpha_upper.c \
 			my_is_num.c \
 			my_putchar.c \
 			my_puterr.c \
