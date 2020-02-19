@@ -15,15 +15,15 @@ SRC			=	$(addprefix $(SRC_D), $(SRC_F))
 OBJ			=	$(SRC:.c=.o)
 SRC_D		=	src/
 SRC_F		=	get_next_line.c \
-				print_grid.c \
-				structures/grid_create.c \
+				structures/grid/grid_create.c \
+				structures/grid/grid_print.c \
 				file_parsing/line_is_valid.c \
 
 SRC_UT		=	$(addprefix $(SRC_UT_D), $(SRC_UT_F))
 OBJ_UT		=	$(SRC_UT:.c=.o)
 SRC_UT_D	=	tests/
 SRC_UT_F	=	test_get_next_line.c \
-				test_print_grid.c \
+				test_grid_print.c \
 				tests_file_parsing/test_line_is_valid.c \
 
 INC			=	-I./include

@@ -7,7 +7,7 @@
 
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
-#include "cell_state.h"
+#include "grid.h"
 #include "my.h"
 
 Test(print_grid, empty_grid, .init = cr_redirect_stdout)
@@ -25,6 +25,6 @@ Test(print_grid, empty_grid, .init = cr_redirect_stdout)
 "7|. . . . . . . .\n"
 "8|. . . . . . . .\n";
 
-    print_grid(grid);
+    grid_print(grid);
     cr_assert_stdout_eq_str(expected);
 }
