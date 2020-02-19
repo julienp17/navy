@@ -10,6 +10,7 @@
 
     #include <stdbool.h>
 
+    #define NB_BOATS            4
     #define LINE_LEN            7
     #define SEP                 ':'
     #define NB_SEPS             2
