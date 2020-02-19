@@ -5,11 +5,10 @@
 ** Print the grid
 */
 
-#include "cell_state.h"
 #include "my.h"
-#include "navy.h"
+#include "grid.h"
 
-void print_grid(grid_t grid)
+void grid_print(grid_t grid)
 {
     my_putstr(" |A B C D E F G H\n");
     my_putstr("-+---------------\n");
