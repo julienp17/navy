@@ -18,6 +18,8 @@ bool line_is_valid(char *line, int line_nb)
     char **args = NULL;
     bool is_valid = true;
 
+    if (line == NULL || line[0] == 0)
+        return (false);
     if (my_strlen(line) != LINE_LEN || my_count_char(line, SEP) != NB_SEPS)
         return (false);
     args = my_str_to_word_array(line, SEP);
