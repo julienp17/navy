@@ -9,20 +9,20 @@
 #include "cell_state.h"
 #include "my.h"
 
-grid_t grid_create(unsigned int rows, unsigned int cols)
+grid_t grid_create(unsigned int nb_rows, unsigned int nb_cols)
 {
     grid_t grid = NULL;
 
-    grid = malloc(sizeof(cell_t *) * (rows + 1));
+    grid = malloc(sizeof(cell_t *) * (nb_rows + 1));
     if (grid == NULL) {
         my_puterr("Couldn't allocate memory for grid enum\n");
         return (NULL);
     }
-    for (unsigned int i = 0 ; i < rows ; i++) {
-        grid[i] = malloc(sizeof(cell_t) * cols);
-        for (unsigned int j = 0 ; j < cols ; j++)
-            grid[i][j] = EMPTY;
+    for (unsigned int row = 0 ; row < nb_rows ; row++) {
+        grid[row] = malloc(sizeof(cell_t) * nb_cols);
+        for (unsigned int col = 0 ; col < nb_cols ; col++)
+            grid[row][col] = EMPTY;
     }
-    grid[rows] = NULL;
+    grid[nb_rows] = NULL;
     return (grid);
 }
