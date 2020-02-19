@@ -6,7 +6,7 @@
 */
 
 #include <stdlib.h>
-#include "cell_state.h"
+#include "grid.h"
 #include "my.h"
 
 grid_t grid_create(unsigned int nb_rows, unsigned int nb_cols)
