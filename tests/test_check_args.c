@@ -12,7 +12,7 @@
 Test(check_args, correct_arguments_first_player)
 {
     int ac = 2;
-    char *av[] = {"./navy", "navy_positions/correct_file1.txt", NULL};
+    char *av[] = {"./navy", "maps/my_navy.txt", NULL};
     int exit_code = 0;
 
     exit_code = check_args(ac, av);
@@ -22,7 +22,7 @@ Test(check_args, correct_arguments_first_player)
 Test(check_args, correct_arguments_second_player)
 {
     int ac = 3;
-    char *av[] = {"./navy", "24555", "navy_positions/correct_file1.txt", NULL};
+    char *av[] = {"./navy", "24555", "maps/my_navy2.txt", NULL};
     int exit_code = 0;
 
     exit_code = check_args(ac, av);
