@@ -9,22 +9,11 @@
 #include "grid.h"
 #include "cell_state.h"
 
-static bool is_boat(cell_t cell);
-
 bool grid_has_boats(grid_t const grid)
 {
-    for (unsigned int i = 0 ; i < GRID_SIZE ; i++) {
-        for (unsigned int j = 0 ; j < GRID_SIZE ; j++) {
-            if (is_boat(grid[i][j]))
+    for (unsigned int i = 0 ; i < GRID_SIZE ; i++)
+        for (unsigned int j = 0 ; j < GRID_SIZE ; j++)
+            if (cell_is_boat(grid[i][j]))
                 return (true);
-        }
-    }
     return (false);
-}
-
-static bool is_boat(cell_t cell)
-{
-    return (cell != EMPTY
-            && cell != HIT
-            && cell != MISSED);
 }
