@@ -20,6 +20,9 @@ int join_connections(pid_t first_player_pid)
 {
     int exit_code = 0;
 
+    my_putstr("my_pid:  ");
+    my_putstr(my_int_to_strnum(getpid()));
+    my_putchar('\n');
     if (first_player_pid == 0)
         exit_code = wait_connection();
     else
