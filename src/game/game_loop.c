@@ -16,10 +16,10 @@
 extern int packet;
 
 int navy_loop(grid_t player_grid, grid_t enemy_grid,
-                pid_t enemy_pid, turn_t turn)
+                pid_t enemy_pid, player_t player)
 {
     packet = 0;
-    if (turn == PLAYER) {
+    if (player == FIRST) {
         player_turn(enemy_grid, enemy_pid);
         packet = 0;
         enemy_turn(player_grid, enemy_pid);
