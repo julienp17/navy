@@ -14,11 +14,22 @@ OBJ_M		=	$(MAIN:.c=.o)
 SRC			=	$(addprefix $(SRC_D), $(SRC_F))
 OBJ			=	$(SRC:.c=.o)
 SRC_D		=	src/
-SRC_F		=	get_next_line.c \
-				pos_is_valid.c \
+SRC_F		=	usage.c \
+				navy.c \
+				get_next_line.c \
+				game/game_loop.c \
+				game/print_grids.c \
+				game/get_input.c \
+				signals/join_connections.c \
+				signals/signals_handler.c \
+				signals/send_coord.c \
+				signals/wait_transmission.c \
+				structures/grid/cell_is_boat.c \
 				structures/grid/grid_create.c \
 				structures/grid/grid_print.c \
 				structures/grid/grid_place_boat.c \
+				structures/grid/grid_has_boats.c \
+				format_parsing/coord_is_valid.c \
 				format_parsing/format_is_valid.c \
 				format_parsing/get_grid_from_file.c \
 
@@ -26,8 +37,10 @@ SRC_UT		=	$(addprefix $(SRC_UT_D), $(SRC_UT_F))
 OBJ_UT		=	$(SRC_UT:.c=.o)
 SRC_UT_D	=	tests/
 SRC_UT_F	=	test_get_next_line.c \
-				test_grid_print.c \
-				test_pos_is_valid.c \
+				test_coord_is_valid.c \
+				test_check_args.c \
+				tests_grid/test_grid_print.c \
+				tests_grid/test_grid_has_boats.c \
 				tests_format_parsing/test_format_is_valid.c \
 
 INC			=	-I./include
