@@ -41,6 +41,7 @@ SRC_UT_F	=	test_get_next_line.c \
 				test_check_args.c \
 				tests_grid/test_grid_print.c \
 				tests_grid/test_grid_has_boats.c \
+				tests_grid/test_grid_place_boat.c \
 				tests_format_parsing/test_format_is_valid.c \
 
 INC			=	-I./include
