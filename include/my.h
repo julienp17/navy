@@ -20,6 +20,7 @@
     bool my_is_num(char const c);
     bool my_str_isalpha(char const *str);
     bool my_str_isnum(char const *str);
+    bool my_str_isnum_pos(char const *str);
     bool my_str_isalphanum(char const *str);
 
     int my_getnbr(char const *str);

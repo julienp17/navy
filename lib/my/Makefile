@@ -23,6 +23,7 @@ SRC		=	my_clean_str.c \
 			my_revstr.c \
 			my_str_isalphanum.c \
 			my_str_isnum.c \
+			my_str_isnum_pos.c \
 			my_str_to_word_array.c \
 			my_strarr_dup.c \
 			my_strcmp.c \
