@@ -9,7 +9,8 @@
 
 bool coord_is_valid(char const *coord)
 {
-    return (coord[0] >= 'A' && coord[0] <= 'H'
+    return (coord
+            && coord[0] >= 'A' && coord[0] <= 'H'
             && coord[1] >= '1' && coord[1] <= '8'
             && coord[2] == '\0');
 }
