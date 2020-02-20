@@ -2,43 +2,42 @@
 ** EPITECH PROJECT, 2020
 ** PSU_navy_2019
 ** File description:
-** Checks if a line is valid from a navy positions file
+** Checks if a format is valid
 */
 
 #include <stdbool.h>
 #include <stddef.h>
 #include "my.h"
-#include "file_parsing.h"
+#include "format_parsing.h"
 
-static bool args_are_valid(char **args, int line_nb);
+static bool args_are_valid(char **args);
 static bool pos_are_valid(char *first, char *last, int boat_len);
 
-bool line_is_valid(char *line, int line_nb)
+bool format_is_valid(char const *format)
 {
     char **args = NULL;
     bool is_valid = true;
 
-    if (line == NULL || line[0] == 0)
+    if (format == NULL || format[0] == 0)
         return (false);
-    if (my_strlen(line) != LINE_LEN || my_count_char(line, SEP) != NB_SEPS)
+    if (my_strlen(format) != LINE_LEN || my_count_char(format, SEP) != NB_SEPS)
         return (false);
-    args = my_str_to_word_array(line, SEP);
-    if (!args_are_valid(args, line_nb))
+    args = my_str_to_word_array(format, SEP);
+    if (!args_are_valid(args))
         is_valid = false;
     my_free_2d_array(args);
     return (is_valid);
 }
 
-static bool args_are_valid(char **args, int line_nb)
+static bool args_are_valid(char **args)
 {
-    int boat_len = 0;
+    char *boat_len = args[0];
+    char *first_pos = args[1];
+    char *last_pos = args[2];
 
-    if (!my_is_num(args[0][0]) || args[0][1] != '\0')
+    if (boat_len[0] < '1' || boat_len[0] > '9' || boat_len[1] != '\0')
         return (false);
-    boat_len = FIRST_BOAT_LEN + line_nb;
-    if (my_getnbr(args[0]) != boat_len)
-        return (false);
-    return (pos_are_valid(args[1], args[2], boat_len));
+    return (pos_are_valid(first_pos, last_pos, boat_len[0] - '0'));
 }
 
 static bool pos_are_valid(char *first, char *last, int boat_len)
