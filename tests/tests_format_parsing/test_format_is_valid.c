@@ -37,7 +37,7 @@ Test(format_is_valid, incorrect_first_lines)
     char *line = NULL;
     bool is_valid = false;
 
-    fd = open("tests/tests_format_parsing/incorrect_file.txt", O_RDONLY);
+    fd = open("navy_positions/incorrect_file.txt", O_RDONLY);
     if (fd < 0)
         close(fd);
     line = get_next_line(fd);
@@ -54,7 +54,7 @@ Test(format_is_valid, correct_file1)
     char *line = NULL;
     bool is_valid = false;
 
-    fd = open("tests/tests_format_parsing/correct_file1.txt", O_RDONLY);
+    fd = open("navy_positions/correct_file1.txt", O_RDONLY);
     if (fd < 0)
         close(fd);
     for (int i = 0 ; i < 4 ; i++) {
@@ -70,7 +70,7 @@ Test(format_is_valid, correct_file2)
     char *line = NULL;
     bool is_valid = false;
 
-    fd = open("tests/tests_format_parsing/correct_file2.txt", O_RDONLY);
+    fd = open("navy_positions/correct_file2.txt", O_RDONLY);
     if (fd < 0)
         close(fd);
     for (int i = 0 ; i < 4 ; i++) {
