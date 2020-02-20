@@ -12,7 +12,7 @@
 #include "grid.h"
 #include "navy.h"
 #include "transmission.h"
-#include "turn.h"
+#include "player_enum.h"
 
 int packet = 0;
 
@@ -20,10 +20,10 @@ int navy(pid_t enemy_pid, char const *filename)
 {
     grid_t player_grid = NULL;
     grid_t enemy_grid = NULL;
-    turn_t turn = PLAYER;
+    player_t player_id = FIRST;
     int status = 0;
 
-    turn = (enemy_pid == 0) ? PLAYER : ENEMY;
+    player_id = (enemy_pid == 0) ? FIRST : SECOND;
     player_grid = get_grid_from_file(filename);
     enemy_grid = grid_create(GRID_SIZE);
     if (player_grid == NULL || enemy_grid == NULL)
@@ -32,9 +32,8 @@ int navy(pid_t enemy_pid, char const *filename)
     if (enemy_pid == -1)
         return (MY_EXIT_FAILURE);
     set_signals_handler();
-    while (status == 0) {
-        status = navy_loop(player_grid, enemy_grid, enemy_pid, turn);
-        turn = (turn == ENEMY) ? PLAYER : ENEMY;
-    }
+    print_grids(player_grid, enemy_grid);
+    while (status == 0)
+        status = navy_loop(player_grid, enemy_grid, enemy_pid, player_id);
     return (0);
 }
