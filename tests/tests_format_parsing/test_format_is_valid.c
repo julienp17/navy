@@ -13,6 +13,24 @@
 #include "format_parsing.h"
 #include "get_next_line.h"
 
+Test(format_is_valid, null_string)
+{
+    char *line = NULL;
+    bool is_valid = false;
+
+    is_valid = format_is_valid(line);
+    cr_assert_eq(is_valid, false);
+}
+
+Test(format_is_valid, empty_string)
+{
+    char *line = "";
+    bool is_valid = false;
+
+    is_valid = format_is_valid(line);
+    cr_assert_eq(is_valid, false);
+}
+
 Test(format_is_valid, incorrect_first_lines)
 {
     int fd = 0;
