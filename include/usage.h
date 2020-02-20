@@ -10,7 +10,9 @@
 
     #define MY_EXIT_SUCCESS         0
     #define MY_EXIT_FAILURE         84
-    #define USAGE \
+    #define INCORRECT_FILE_MSG      \
+    "Can't read given file.\n"
+    #define USAGE                   \
     "USAGE\n"                                                                  \
     "     ./navy [first_player_pid] navy_positions\n"                          \
     "DESCRIPTION\n"                                                            \
