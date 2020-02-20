@@ -18,7 +18,9 @@ SRC_F		=	get_next_line.c \
 				pos_is_valid.c \
 				structures/grid/grid_create.c \
 				structures/grid/grid_print.c \
-				file_parsing/line_is_valid.c \
+				structures/grid/grid_place_boat.c \
+				format_parsing/format_is_valid.c \
+				format_parsing/get_grid_from_file.c \
 
 SRC_UT		=	$(addprefix $(SRC_UT_D), $(SRC_UT_F))
 OBJ_UT		=	$(SRC_UT:.c=.o)
@@ -26,7 +28,7 @@ SRC_UT_D	=	tests/
 SRC_UT_F	=	test_get_next_line.c \
 				test_grid_print.c \
 				test_pos_is_valid.c \
-				tests_file_parsing/test_line_is_valid.c \
+				tests_format_parsing/test_format_is_valid.c \
 
 INC			=	-I./include
 
