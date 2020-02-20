@@ -15,4 +15,5 @@
     #define NB_SEPS             2
 
     bool format_is_valid(char const *format);
+    bool coord_is_valid(char const *pos);
 #endif
