@@ -19,6 +19,5 @@
     void grid_print(grid_t grid);
     int grid_place_boat(grid_t grid, char const *format);
     grid_t get_grid_from_file(char const *filename);
-
-    bool pos_is_valid(char const *pos);
+    bool grid_has_boats(grid_t const grid);
 #endif
