@@ -40,6 +40,18 @@ Test(check_args, negative_pid, .init = cr_redirect_stderr)
     cr_assert_eq(exit_code, -1);
 }
 
+Test(check_args, too_much_arguments, .init = cr_redirect_stderr)
+{
+    int ac = 4;
+    char *av[] = {"./navy", "34566",
+                "navy_positions/correct_file1.txt", "plume", NULL};
+    int exit_code = 0;
+
+    exit_code = check_args(ac, av);
+    cr_assert_stderr_eq_str(USAGE);
+    cr_assert_eq(exit_code, -1);
+}
+
 Test(check_args, invalid_file, .init = cr_redirect_stderr)
 {
     int ac = 2;
