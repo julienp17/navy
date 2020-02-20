@@ -51,14 +51,3 @@ Test(check_args, too_much_arguments, .init = cr_redirect_stderr)
     cr_assert_stderr_eq_str(USAGE);
     cr_assert_eq(exit_code, -1);
 }
-
-Test(check_args, invalid_file, .init = cr_redirect_stderr)
-{
-    int ac = 2;
-    char *av[] = {"./navy", "unfortunately this file doesn't exist", NULL};
-    int exit_code = 0;
-
-    exit_code = check_args(ac, av);
-    cr_assert_stderr_eq_str(INCORRECT_FILE_MSG);
-    cr_assert_eq(exit_code, -1);
-}
