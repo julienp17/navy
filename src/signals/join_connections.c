@@ -21,7 +21,7 @@ static void confirm_connection(int sig, siginfo_t *info, void *ucontext);
 
 int join_connections(pid_t enemy_pid)
 {
-    my_putstr("my_pid:  ");
+    my_putstr("my_pid: ");
     my_putstr(my_int_to_strnum(getpid()));
     my_putchar('\n');
     if (enemy_pid == 0)
