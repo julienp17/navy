@@ -8,8 +8,7 @@
 #include <stdbool.h>
 #include <criterion/criterion.h>
 #include "get_next_line.h"
-
-bool pos_is_valid(char const *input);
+#include "grid.h"
 
 Test(pos_is_valid, valid1)
 {
