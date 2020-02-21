@@ -11,28 +11,36 @@
 #include <unistd.h>
 #include "navy.h"
 #include "transmission.h"
+#include "game_status_enum.h"
 #include "my.h"
 
 extern int packet;
 
-int navy_loop(grid_t player_grid, grid_t enemy_grid,
+static game_status_t player_turn(grid_t enemy_grid, pid_t enemy_pid);
+static game_status_t enemy_turn(grid_t player_grid, pid_t enemy_pid);
+
+game_status_t navy_loop(grid_t player_grid, grid_t enemy_grid,
                 pid_t enemy_pid, player_t player)
 {
     packet = 0;
     if (player == FIRST) {
-        player_turn(enemy_grid, enemy_pid);
+        if (player_turn(enemy_grid, enemy_pid) != ONGOING)
+            return (WON);
         packet = 0;
-        enemy_turn(player_grid, enemy_pid);
+        if (enemy_turn(player_grid, enemy_pid) != ONGOING)
+            return (LOST);
     } else {
-        enemy_turn(player_grid, enemy_pid);
+        if (enemy_turn(player_grid, enemy_pid) != ONGOING)
+            return (LOST);
         packet = 0;
-        player_turn(enemy_grid, enemy_pid);
+        if (player_turn(enemy_grid, enemy_pid) != ONGOING)
+            return (WON);
     }
     print_grids(player_grid, enemy_grid);
-    return (0);
+    return (ONGOING);
 }
 
-void player_turn(grid_t enemy_grid, pid_t enemy_pid)
+static game_status_t player_turn(grid_t enemy_grid, pid_t enemy_pid)
 {
     char *coord = NULL;
     int row = 0;
@@ -47,12 +55,16 @@ void player_turn(grid_t enemy_grid, pid_t enemy_pid)
     my_putstr(coord);
     my_putstr((enemy_grid[row][col] == HIT) ? ": hit\n\n" : ": missed\n\n");
     free(coord);
+    packet = 0;
+    wait_transmission(1);
+    return ((packet == 1) ? WON : ONGOING);
 }
 
-void enemy_turn(grid_t player_grid, pid_t enemy_pid)
+static game_status_t enemy_turn(grid_t player_grid, pid_t enemy_pid)
 {
     int row = 0;
     int col = 0;
+    bool is_finished = false;
 
     my_putstr("waiting for enemy's attack...\n");
     wait_transmission(6);
@@ -64,4 +76,8 @@ void enemy_turn(grid_t player_grid, pid_t enemy_pid)
     my_putchar(col + 'A');
     my_putchar(row + '0' + 1);
     my_putstr((player_grid[row][col] == HIT) ? ": hit\n\n" : ": missed\n\n");
+    is_finished = !grid_has_boats(player_grid);
+    usleep(100000);
+    kill(enemy_pid, (is_finished) ? SIGUSR2 : SIGUSR1);
+    return ((is_finished) ? LOST : ONGOING);
 }
