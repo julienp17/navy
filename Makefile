@@ -24,11 +24,11 @@ SRC_F		=	usage.c \
 				signals/signals_handler.c \
 				signals/send_coord.c \
 				signals/wait_transmission.c \
-				structures/grid/cell_is_boat.c \
-				structures/grid/grid_create.c \
-				structures/grid/grid_print.c \
-				structures/grid/grid_place_boat.c \
-				structures/grid/grid_has_boats.c \
+				grid/cell_is_boat.c \
+				grid/grid_create.c \
+				grid/grid_print.c \
+				grid/grid_place_boat.c \
+				grid/grid_has_boats.c \
 				format_parsing/coord_is_valid.c \
 				format_parsing/format_is_valid.c \
 				format_parsing/get_grid_from_file.c \
