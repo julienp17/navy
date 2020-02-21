@@ -26,12 +26,12 @@ SRC_F		=	usage.c \
 				signals/wait_transmission.c \
 				grid/cell_is_boat.c \
 				grid/grid_create.c \
+				grid/grid_create_from_file.c \
 				grid/grid_print.c \
 				grid/grid_place_boat.c \
 				grid/grid_has_boats.c \
 				format_parsing/coord_is_valid.c \
 				format_parsing/format_is_valid.c \
-				format_parsing/get_grid_from_file.c \
 
 SRC_UT		=	$(addprefix $(SRC_UT_D), $(SRC_UT_F))
 OBJ_UT		=	$(SRC_UT:.c=.o)

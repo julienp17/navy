@@ -26,7 +26,7 @@ int navy(pid_t enemy_pid, char const *filename)
     game_status_t game_status = ONGOING;
 
     player_id = (enemy_pid == 0) ? FIRST : SECOND;
-    player_grid = get_grid_from_file(filename);
+    player_grid = grid_create_from_file(filename);
     enemy_grid = grid_create(GRID_SIZE);
     if (player_grid == NULL || enemy_grid == NULL)
         return (-1);

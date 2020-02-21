@@ -13,14 +13,12 @@
 #include "navy.h"
 #include "get_next_line.h"
 
-//TODO: fix this file parsing error checking
-
 static grid_t get_grid_from_fd(int fd);
 static int fill_grid_by_lines(grid_t grid, int fd);
 static bool line_is_valid(char const *line, int line_nb);
 static char **get_lines(int fd);
 
-grid_t get_grid_from_file(char const *filename)
+grid_t grid_create_from_file(char const *filename)
 {
     int fd = 0;
     grid_t grid = NULL;
