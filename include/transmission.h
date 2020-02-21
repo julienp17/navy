@@ -10,7 +10,12 @@
 
     #include <sys/types.h>
 
+    #define DEFAULT_USLEEP      100000
+    #define COL_BITMASK         0b00111000
+    #define ROW_BITMASK         0b00000111
+
     void set_signals_handler(void);
+    void send_signal(pid_t pid, int signum);
     void send_coord(char const *coord, pid_t enemy_pid);
     int join_connections(pid_t first_player_pid);
     void wait_transmission(unsigned int nb_bits);
