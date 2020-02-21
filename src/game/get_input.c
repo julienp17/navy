@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <unistd.h>
 #include "get_next_line.h"
 #include "format_parsing.h"
 #include "my.h"
@@ -30,5 +31,5 @@ char *get_input(void)
 static char *input(char const *input_msg)
 {
     my_putstr(input_msg);
-    return (get_next_line(0));
+    return (get_next_line(STDIN_FILENO));
 }
