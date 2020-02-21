@@ -13,6 +13,8 @@
 #include "navy.h"
 #include "transmission.h"
 #include "player_enum.h"
+#include "game_status_enum.h"
+#include "my.h"
 
 int packet = 0;
 
@@ -21,7 +23,7 @@ int navy(pid_t enemy_pid, char const *filename)
     grid_t player_grid = NULL;
     grid_t enemy_grid = NULL;
     player_t player_id = FIRST;
-    int status = 0;
+    game_status_t game_status = ONGOING;
 
     player_id = (enemy_pid == 0) ? FIRST : SECOND;
     player_grid = get_grid_from_file(filename);
@@ -33,7 +35,8 @@ int navy(pid_t enemy_pid, char const *filename)
         return (MY_EXIT_FAILURE);
     set_signals_handler();
     print_grids(player_grid, enemy_grid);
-    while (status == 0)
-        status = navy_loop(player_grid, enemy_grid, enemy_pid, player_id);
-    return (0);
+    while (game_status == ONGOING)
+        game_status = navy_loop(player_grid, enemy_grid, enemy_pid, player_id);
+    my_putstr((game_status == WON) ? "I won\n" : "Enemy won\n");
+    return (game_status);
 }
