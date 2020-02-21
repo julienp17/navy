@@ -24,6 +24,7 @@ SRC_F		=	usage.c \
 				signals/signals_handler.c \
 				signals/send_coord.c \
 				signals/wait_transmission.c \
+				signals/send_signal.c \
 				grid/cell_is_boat.c \
 				grid/grid_create.c \
 				grid/grid_create_from_file.c \
