@@ -14,6 +14,12 @@
     #define COL_BITMASK         0b00111000
     #define ROW_BITMASK         0b00000111
 
+    typedef struct transmission {
+        unsigned int count;
+        unsigned char packet;
+        pid_t enemy_pid;
+    } transmission_t;
+
     void set_signals_handler(void);
     void send_signal(pid_t pid, int signum);
     void send_coord(char const *coord, pid_t enemy_pid);

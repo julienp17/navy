@@ -6,12 +6,13 @@
 */
 
 #include <unistd.h>
+#include "transmission.h"
 
-extern int packet;
+extern transmission_t transmission;
 
 void wait_transmission(unsigned int nb_bits)
 {
-    packet = 0;
-    for (unsigned int i = 0 ; i < nb_bits ; i++)
-        pause();
+    transmission.count = 0;
+    transmission.packet = 0;
+    while (transmission.count != nb_bits);
 }

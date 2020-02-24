@@ -11,9 +11,10 @@
 #include <signal.h>
 #include <stdio.h>
 #include "my.h"
+#include "transmission.h"
 #include "navy.h"
 
-extern int packet;
+extern transmission_t transmission;
 
 static pid_t wait_connection(void);
 static pid_t connect(pid_t first_player_pid);
@@ -41,7 +42,7 @@ static pid_t wait_connection(void)
     my_putstr("waiting for enemy connection...\n\n");
     pause();
     my_putstr("enemy connected\n\n");
-    return (packet);
+    return (transmission.enemy_pid);
 }
 
 static pid_t connect(pid_t const enemy_pid)
@@ -64,7 +65,7 @@ static void confirm_connection(int sig, siginfo_t *info, void *ucontext)
     (void)ucontext;
     if (sig == SIGUSR1)
         return;
-    packet = info->si_pid;
+    transmission.enemy_pid = info->si_pid;
     if (kill(info->si_pid, SIGUSR1) == -1)
         my_puterr("error sending signal to second player process");
 }

@@ -6,8 +6,9 @@
 */
 
 #include <signal.h>
+#include "transmission.h"
 
-extern int packet;
+extern transmission_t transmission;
 
 static void handle_sigusr1(int signum);
 static void handle_sigusr2(int signum);
@@ -21,11 +22,13 @@ void set_signals_handler(void)
 static void handle_sigusr1(int signum)
 {
     (void)signum;
-    packet = packet << 1;
+    transmission.count++;
+    transmission.packet = transmission.packet << 1;
 }
 
 static void handle_sigusr2(int signum)
 {
     (void)signum;
-    packet = (packet << 1) + 1;
+    transmission.count++;
+    transmission.packet = (transmission.packet << 1) + 1;
 }
