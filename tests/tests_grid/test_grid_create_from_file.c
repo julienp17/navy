@@ -60,3 +60,12 @@ Test(grid_create_from_file, bad_format_in_file, .init = cr_redirect_stderr)
     cr_assert_null(grid);
     cr_assert_stderr_eq_str("Unexpected line found in file area\n");
 }
+
+Test(grid_create_from_file, not_enough_boat, .init = cr_redirect_stderr)
+{
+    grid_t grid = NULL;
+
+    grid = grid_create_from_file("maps/incorrect_navy3.txt");
+    cr_assert_null(grid);
+    cr_assert_stderr_eq_str("Not enough lines in file\n");
+}

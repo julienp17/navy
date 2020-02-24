@@ -53,6 +53,10 @@ static int fill_grid_by_lines(grid_t grid, int fd)
     char **lines = NULL;
 
     lines = get_lines(fd);
+    if (!lines) {
+        my_puterr("Not enough lines in file\n");
+        return (-1);
+    }
     for (unsigned int i = 0 ; lines[i] ; i++) {
         if (!line_is_valid(lines[i], i)||grid_place_boat(grid, lines[i]) == -1){
             my_puterr("Unexpected line found in file area\n");
