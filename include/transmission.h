@@ -10,7 +10,7 @@
 
     #include <sys/types.h>
 
-    #define DEFAULT_USLEEP      100000
+    #define DEFAULT_USLEEP      1000
     #define COL_BITMASK         0b00111000
     #define ROW_BITMASK         0b00000111
 
