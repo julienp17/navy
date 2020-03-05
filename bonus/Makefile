@@ -17,16 +17,17 @@ SRC_D		=	src/
 SRC_F		=	usage.c \
 				navy.c \
 				get_next_line.c \
-				game/game_loop.c \
 				game/print_grids.c \
+				game/game_create.c \
 				game/get_input.c \
-				signals/join_connections.c \
-				signals/signals_handler.c \
-				signals/send_coord.c \
-				signals/wait_transmission.c \
-				signals/send_signal.c \
-				grid/cell_is_boat.c \
+				game/game_loop.c \
+				network/network.c \
+				network/get_ip_address.c \
+				network/server.c \
+				network/client.c \
 				grid/grid_create.c \
+				grid/grid_destroy.c \
+				grid/cell_is_boat.c \
 				grid/grid_create_from_file.c \
 				grid/grid_print.c \
 				grid/grid_place_boat.c \
