@@ -16,9 +16,6 @@ int check_args(int ac, char **av)
         my_puterr(USAGE);
         return (-1);
     }
-    if (ac == 3 && !my_str_isnum_pos(av[1])) {
-        my_puterr(USAGE);
-        return (-1);
-    }
+    (void)av;
     return (0);
 }
