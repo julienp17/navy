@@ -9,15 +9,13 @@
     #define NAVY_H_
 
     #include <sys/types.h>
-    #include "player_enum.h"
-    #include "game_status_enum.h"
-    #include "grid.h"
+    #include "game.h"
 
     #define NB_BOATS        4
 
-    int navy(pid_t enemy_pid, char const *filename);
-    game_status_t navy_loop(grid_t player_grid, grid_t enemy_grid,
-                            player_t player);
+    int navy(char const *server_address, char const *filename);
+    int launch_navy(game_t *game);
+    game_status_t navy_loop(game_t *game);
 
     void print_grids(grid_t player_grid, grid_t enemy_grid);
     char *get_input(void);
