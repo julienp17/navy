@@ -5,75 +5,109 @@
 ** Loop of the navy game
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <sys/types.h>
+#include <sys/socket.h>
+#include <string.h>
 #include <unistd.h>
 #include "navy.h"
-#include "transmission.h"
-#include "game_status_enum.h"
+#include "game.h"
 #include "my.h"
 
-extern transmission_t transmission;
+static game_status_t player_turn(grid_t enemy_grid, socket_t enemy_socket);
+static game_status_t enemy_turn(grid_t player_grid, socket_t enemy_socket);
 
-static game_status_t player_turn(grid_t enemy_grid);
-static game_status_t enemy_turn(grid_t player_grid);
-
-game_status_t navy_loop(grid_t player_grid, grid_t enemy_grid, player_t player)
+game_status_t navy_loop(game_t *game)
 {
-    if (player == FIRST) {
-        if (player_turn(enemy_grid) != ONGOING)
-            return (WON);
-        if (enemy_turn(player_grid) != ONGOING)
-            return (LOST);
+    if (game->player_id == FIRST) {
+        game->status = player_turn(game->enemy_grid, game->network->client_socket);
+        if (game->status != ONGOING)
+            return (game->status);
+        game->status = enemy_turn(game->player_grid, game->network->client_socket);
+        if (game->status != ONGOING)
+            return (game->status);
     } else {
-        if (enemy_turn(player_grid) != ONGOING)
-            return (LOST);
-        if (player_turn(enemy_grid) != ONGOING)
-            return (WON);
+        game->status = enemy_turn(game->player_grid, game->network->client_socket);
+        if (game->status != ONGOING)
+            return (game->status);
+        game->status = player_turn(game->enemy_grid, game->network->client_socket);
+        if (game->status != ONGOING)
+            return (game->status);
     }
-    print_grids(player_grid, enemy_grid);
+    print_grids(game->player_grid, game->enemy_grid);
     return (ONGOING);
 }
 
-static game_status_t player_turn(grid_t enemy_grid)
+static game_status_t player_turn(grid_t enemy_grid, socket_t enemy_socket)
 {
     char *coord = NULL;
     int row = 0;
     int col = 0;
+    ssize_t recv_size = 0;
+    char buffer[50] = "";
 
     coord = get_input();
+    if (coord == NULL)
+        return (ERROR);
     col = coord[0] - 'A';
     row = coord[1] - '0' - 1;
-    send_coord(coord, transmission.enemy_pid);
-    wait_transmission(1);
-    my_putstr(coord);
-    my_putstr((transmission.packet == 1) ? ": hit\n\n" : ": missed\n\n");
+    if (send(enemy_socket, coord, strlen(coord), 0) == -1) {
+        perror("send");
+        return (NETWORK_ERROR);
+    }
+    recv_size = recv(enemy_socket, buffer, strlen("missed"), 0);
+    if (recv_size == -1) {
+        perror("recv");
+        return (NETWORK_ERROR);
+    }
+    printf("%s: %s\n\n", coord, buffer);
     free(coord);
-    enemy_grid[row][col] = (transmission.packet || enemy_grid[row][col] == HIT)
-                            ? HIT : MISS;
-    wait_transmission(1);
-    return ((transmission.packet == 1) ? WON : ONGOING);
+    enemy_grid[row][col] = (strcmp(buffer, "hit") == 0
+                            || enemy_grid[row][col] == HIT) ? HIT : MISS;
+    recv_size = recv(enemy_socket, buffer, strlen("not finished"), 0);
+    if (recv_size == -1) {
+        perror("recv");
+        return (NETWORK_ERROR);
+    }
+    return ((strcmp(buffer, "finished") == 0) ? WON : ONGOING);
 }
 
-static game_status_t enemy_turn(grid_t player_grid)
+static game_status_t enemy_turn(grid_t player_grid, socket_t enemy_socket)
 {
     int row = 0;
     int col = 0;
     bool is_hit = false;
     bool is_finished = false;
+    ssize_t recv_size = 0;
+    char buffer[50] = "";
 
-    my_putstr("waiting for enemy's attack...\n");
-    wait_transmission(6);
-    col = (transmission.packet & COL_BITMASK) >> 3;
-    row = (transmission.packet & ROW_BITMASK);
+    printf("waiting for enemy's attack...\n");
+    recv_size = recv(enemy_socket, buffer, 2, 0);
+    if (recv_size == -1) {
+        perror("recv");
+        return (NETWORK_ERROR);
+    }
+    buffer[recv_size] = '\0';
+    if (buffer == NULL || buffer[0] == 0)
+        return (NETWORK_ERROR);
+    col = buffer[0] - 'A';
+    row = buffer[1] - '1';
     is_hit = cell_is_boat(player_grid[row][col]);
-    send_signal(transmission.enemy_pid, (is_hit) ? SIGUSR2 : SIGUSR1);
-    my_putchar(col + 'A');
-    my_putchar(row + '0' + 1);
-    my_putstr((is_hit) ? ": hit\n\n" : ": missed\n\n");
+    printf("%s: ", buffer);
+    strcpy(buffer, (is_hit) ? "hit" : "missed");
+    printf("%s\n\n", buffer);
+    if (send(enemy_socket, buffer, strlen(buffer), 0) == -1) {
+        perror("send");
+        return (NETWORK_ERROR);
+    }
     player_grid[row][col] = (is_hit || player_grid[row][col] == HIT)?HIT : MISS;
     is_finished = !grid_has_boats(player_grid);
-    send_signal(transmission.enemy_pid, (is_finished) ? SIGUSR2 : SIGUSR1);
+    strcpy(buffer, (is_finished) ? "finished" : "not finished");
+    if (send(enemy_socket, buffer, strlen(buffer), 0) == -1) {
+        perror("send");
+        return (NETWORK_ERROR);
+    }
     return ((is_finished) ? LOST : ONGOING);
 }
