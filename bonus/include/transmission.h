@@ -14,15 +14,9 @@
     #define MAXRCVLEN           500
     #define PORTNUM             2300
 
-    typedef struct transmission {
-        unsigned int count;
-        unsigned char packet;
-        pid_t enemy_pid;
-    } transmission_t;
+    typedef int socket_t;
 
-    void set_signals_handler(void);
-    void send_signal(pid_t pid, int signum);
-    void send_coord(char const *coord, pid_t enemy_pid);
-    int join_connections(pid_t first_player_pid);
-    void wait_transmission(unsigned int nb_bits);
+    int launch_server(int const port_number);
+    char *get_ip_address(void);
+    int client_connect(char const *server_address, int const port_number);
 #endif
