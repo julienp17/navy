@@ -14,34 +14,32 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <sys/socket.h>
-#include "transmission.h"
+#include "network.h"
 
 static struct sockaddr_in get_socket_address(char const *server_address,
                                             int const port_number);
 
-int client_connect(char const *server_address, int const port_number)
+socket_t client_create(void)
 {
-    char buffer[MAXRCVLEN + 1] = "";
-    size_t recv_len = 0;
     socket_t client_socket = 0;
-    struct sockaddr_in server_socket;
 
     client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (client_socket == -1) {
         perror("socket");
-        return (EXIT_FAILURE);
+        return (-1);
     }
+    return (client_socket);
+}
+
+int client_connect(socket_t client_socket, char const *server_address, int const port_number)
+{
+    struct sockaddr_in server_socket;
+
     server_socket = get_socket_address(server_address, port_number);
     if (connect(client_socket, (struct sockaddr *)&server_socket, sizeof(struct sockaddr_in)) == -1) {
         perror("connect");
         return (EXIT_FAILURE);
     }
-    while (strcmp(buffer, "Hello World !\n") != 0) {
-        recv_len = recv(client_socket, buffer, MAXRCVLEN, 0);
-        buffer[recv_len] = '\0';
-    }
-    printf("Sucessfully connected\n");
-    close(client_socket);
     return (EXIT_SUCCESS);
 }
 
