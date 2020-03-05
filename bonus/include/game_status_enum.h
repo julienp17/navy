@@ -12,5 +12,7 @@
         ONGOING = 42,
         WON = 0,
         LOST = 1,
+        ERROR = -84,
+        NETWORK_ERROR = -192,
     } game_status_t;
 #endif
