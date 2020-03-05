@@ -38,9 +38,11 @@ static pid_t wait_connection(void)
 
     handle_connection.sa_sigaction = confirm_connection;
     handle_connection.sa_flags = SA_SIGINFO;
+    sigemptyset(&handle_connection.sa_mask);
     sigaction(SIGUSR2, &handle_connection, NULL);
     my_putstr("waiting for enemy connection...\n\n");
-    pause();
+    if (usleep(CONNECTION_USLEEP) == 0)
+        return (-42);
     my_putstr("enemy connected\n\n");
     return (transmission.enemy_pid);
 }
