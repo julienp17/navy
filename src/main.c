@@ -10,7 +10,7 @@
 #include "usage.h"
 #include "my.h"
 #include "navy.h"
-
+#include <stdio.h>
 int main(int ac, char **av)
 {
     char *filename = NULL;
@@ -22,5 +22,5 @@ int main(int ac, char **av)
     filename = (ac == 2) ? av[1] : av[2];
     first_player_pid = (ac == 2) ? 0 : my_strnum_to_int(av[1]);
     exit_code = navy(first_player_pid, filename);
-    return (exit_code);
+    return (exit_code == -42 ? 0 : exit_code);
 }
