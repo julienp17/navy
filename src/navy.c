@@ -31,8 +31,8 @@ int navy(pid_t enemy_pid, char const *filename)
     if (player_grid == NULL || enemy_grid == NULL)
         return (-1);
     transmission.enemy_pid = join_connections(enemy_pid);
-    if (transmission.enemy_pid == -1)
-        return (MY_EXIT_FAILURE);
+    if (transmission.enemy_pid < 0)
+        return (transmission.enemy_pid);
     set_signals_handler();
     print_grids(player_grid, enemy_grid);
     while (game_status == ONGOING)
